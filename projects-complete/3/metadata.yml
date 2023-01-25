@@ -1,0 +1,12 @@
+---
+:id: 99170478
+:submitters:
+- :name: David Zalewski
+  :email: dzalews1@asu.edu
+:created_at: !ruby/object:ActiveSupport::TimeWithZone
+  utc: 2021-11-09 07:26:35.277852000 Z
+  zone: !ruby/object:ActiveSupport::TimeZone
+    name: America/Los_Angeles
+  time: 2021-11-08 23:26:35.277852000 Z
+:status: processed
+:score: 27.0

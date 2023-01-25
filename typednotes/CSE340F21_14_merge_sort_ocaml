@@ -1,0 +1,56 @@
+(* 
+ *  given two sorted lists, merge the two lists into one list 
+ *)
+let rec merge_two_sorted_lists l1 l2 = match (l1 , l2) with 
+	| ([],_) 		-> l2
+  	| (_,[]) 		-> l1
+ 	| (h1::t1,h2::t2) 	-> if h1 > h2 then
+				  	h1:: (merge_two_sorted_lists t1 l2)
+				   else
+					h2:: (merge_two_sorted_lists l1 t2)
+
+
+(* 
+ *  given a list returns a a new list where each item in the 
+ *  original list is a list by itself 
+ *)
+let rec make_list_of_lists l = match l with
+	| [] -> []
+	| h::t -> [h] :: (make_list_of_lists t)
+
+
+(* 
+ *  given a list of lists where each list is sorted, merge every two 
+ *  successive lists this will result in a new list of sorted lists 
+ *  with roughly half the number of lists in the original list 
+ *)
+let rec reduce_by_merging_sorted_list_of_lists l = match l with
+	| [] -> l
+	| h::[] -> [h]
+	| h1::h2::t -> merge_two_sorted_lists h1 h2 :: reduce_by_merging_sorted_list_of_lists t
+
+
+(* 
+ *  given a list of sorted lists, keep merging until there is one sorted list 
+ *
+ *   1: if the list is empty, the result is the empty list
+ *   2: if the list of lists has only one element (one sorted list), return 
+ *      the one element
+ *   3: otherwise reduce_by_merge the list of lists and merge sort recursively 
+ *      the “reduced” list of lists. Effectively, merge sort does nothing 
+ *      except calling repeatedly the reduce_by_merging function until there 
+ *      is one list remaining
+ *)
+let rec merge_sort_list_list  l = match l with
+	| [] -> []
+	| h::[] -> h
+	| h1::h2::t -> merge_sort_list_list (reduce_by_merging_sorted_list_of_lists l)
+
+
+(* 
+ *  merge sort:
+ *
+ *      1: make a list of lists from the given list 
+ *      2: merge sorts the list or lists 
+ *)
+let merge_sort_list l = merge_sort_list_list (make_list_of_lists l);;
